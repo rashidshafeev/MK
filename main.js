@@ -68,23 +68,22 @@ function changeHP(player) {
     if (player.hp < 0) {
         player.hp = 0
     }
-    console.log(player.hp)
 
     $playerLife.style.width = player.hp + '%'
 }
 
-function playerLose(player) {
-    const $loseTitle = createElement('div', 'loseTitle')
+function playerWin(player) {
+    const $winTitle = createElement('div', 'winTitle')
 
     if (player) {
-        $loseTitle.innerText = player.name + ' win'
+        $winTitle.innerText = player.name + ' win'
     } else {
-        $loseTitle.innerText = 'draw'
+        $winTitle.innerText = 'draw'
     }
 
     $randomButton.disabled = true
 
-    return $loseTitle
+    return $winTitle
 }
 
 $randomButton.addEventListener('click', function() {
@@ -92,11 +91,11 @@ $randomButton.addEventListener('click', function() {
         changeHP(player2)
 
         if ((player1.hp > 0)&&(player2.hp == 0)) {
-            $arenas.appendChild(playerLose(player1))
+            $arenas.appendChild(playerWin(player1))
         } else if ((player1.hp == 0)&&(player2.hp > 0)) {
-            $arenas.appendChild(playerLose(player2))
+            $arenas.appendChild(playerWin(player2))
         } else if ((player1.hp == 0)&&(player2.hp == 0)) {
-            $arenas.appendChild(playerLose())
+            $arenas.appendChild(playerWin())
         }
 })
 
