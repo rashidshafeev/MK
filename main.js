@@ -1,6 +1,7 @@
 const $arenas = document.querySelector('.arenas')
 const $randomButton = document.querySelector('.button')
 
+
 const player1 = {
     player: 1,
     name: 'SUB-ZERO',
@@ -9,8 +10,13 @@ const player1 = {
     weapon: ['Kunai','Sai'],
     attack: function() {
         console.log(player1.name + 'Fight...')
-    }
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP,
+
 }
+
 
 const player2 = {
     player: 2,
@@ -20,8 +26,32 @@ const player2 = {
     weapon: ['Kunai','Sai'],
     attack: function() {
         console.log(player2.name + 'Fight...')
+    },
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP,
+}
+
+
+function changeHP(amount) {
+    this.hp -= Math.ceil(Math.random()*amount);
+
+    if (this.hp < 0) {
+        this.hp = 0
     }
 }
+
+
+function elHP() {
+    const $playerLife = document.querySelector('.player' + this.player + ' .life')
+    return $playerLife
+}
+
+
+function renderHP() {
+    this.elHP().style.width = this.hp + '%'
+}
+
 
 function createElement(tag, className) {
     const $tag = document.createElement(tag)
@@ -32,6 +62,7 @@ function createElement(tag, className) {
 
     return $tag
 }
+
 
 function createPlayer(playerInfo) {
     const $player = createElement('div', 'player' + playerInfo.player)
@@ -61,16 +92,6 @@ function createPlayer(playerInfo) {
     return $player
 }
 
-function changeHP(player) {
-    const $playerLife = document.querySelector('.player' + player.player + ' .life')
-    player.hp -= Math.ceil(Math.random()*20);
-
-    if (player.hp < 0) {
-        player.hp = 0
-    }
-
-    $playerLife.style.width = player.hp + '%'
-}
 
 function playerWin(player) {
     const $winTitle = createElement('div', 'winTitle')
@@ -81,23 +102,47 @@ function playerWin(player) {
         $winTitle.innerText = 'draw'
     }
 
-    $randomButton.disabled = true
-
     return $winTitle
 }
 
-$randomButton.addEventListener('click', function() {
-        changeHP(player1)
-        changeHP(player2)
 
-        if ((player1.hp > 0)&&(player2.hp == 0)) {
+$randomButton.addEventListener('click', function() {
+        player1.changeHP(20)
+        player1.renderHP()
+        player2.changeHP(20)
+        player2.renderHP()
+
+        if ((player1.hp > 0)&&(player2.hp === 0)) {
             $arenas.appendChild(playerWin(player1))
-        } else if ((player1.hp == 0)&&(player2.hp > 0)) {
+        } else if ((player1.hp === 0)&&(player2.hp > 0)) {
             $arenas.appendChild(playerWin(player2))
-        } else if ((player1.hp == 0)&&(player2.hp == 0)) {
+        } else if ((player1.hp === 0)&&(player2.hp === 0)) {
             $arenas.appendChild(playerWin())
         }
+
+        if (player1.hp === 0 || player2.hp === 0) {
+            $randomButton.disabled = true
+            $arenas.appendChild(createReloadButton())
+        }
+        
 })
+
+
+function createReloadButton() {
+    const $reloadWrap = createElement('div','reloadWrap')
+    const $reloadButton = createElement('button','button')
+
+    $reloadButton.innerText = 'Restart'
+
+    $reloadWrap.appendChild($reloadButton)
+
+    $reloadButton.addEventListener('click', function(){
+        window.location.reload()
+    })
+
+    return $reloadWrap
+}
+
 
 $arenas.appendChild(createPlayer(player1))
 $arenas.appendChild(createPlayer(player2))
