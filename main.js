@@ -48,8 +48,8 @@ function elHP() {
 }
 
 
-function renderHP(playerLife) {
-    playerLife.style.width = this.hp + '%'
+function renderHP() {
+    this.elHP().style.width = this.hp + '%'
 }
 
 
@@ -108,9 +108,9 @@ function playerWin(player) {
 
 $randomButton.addEventListener('click', function() {
         player1.changeHP(20)
-        player1.renderHP(player1.elHP())
+        player1.renderHP()
         player2.changeHP(20)
-        player2.renderHP(player2.elHP())
+        player2.renderHP()
 
         if ((player1.hp > 0)&&(player2.hp === 0)) {
             $arenas.appendChild(playerWin(player1))
