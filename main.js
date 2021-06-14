@@ -195,6 +195,8 @@ function generateLogs(type, player1, player2, damage) {
         case 'defence':
             text = `${date.getHours()}:${date.getMinutes()} - ${logs[type][getRandom(logs[type].length) - 1].replace('[playerKick]', player2.name).replace('[playerDefence]', player1.name)}`
             break
+        default:
+            break
     }
     console.log(text)
     const el = `<p>${text}</p>`
