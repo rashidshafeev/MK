@@ -2,10 +2,7 @@ import {getRandom, createElement} from './utils.js'
 import {player1, player2} from './player.js'
 import {generateLogs} from './logs.js'
 import {enemyAttack, playerAttack, damageApply} from './fightlogic.js'
-import {winCheck} from './wincheck.js'
-
-const $arenas = document.querySelector('.arenas')
-const $formFight = document.querySelector('.control')
+import {winCheck, $arenas, $formFight} from './wincheck.js'
 
 function createPlayer(playerInfo) {
     const $player = createElement('div', `player${playerInfo.player}`)

@@ -52,4 +52,4 @@ function createReloadButton() {
     $arenas.appendChild($reloadWrap)
 }
 
-export {winCheck}
+export {winCheck, $arenas, $formFight}
