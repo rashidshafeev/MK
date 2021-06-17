@@ -1,6 +1,6 @@
 const getRandom = (amount) => Math.ceil(Math.random()*amount)
 
-function createElement(tag, className) {
+const createElement = (tag, className) => {
     const $tag = document.createElement(tag)
 
     if (className) {
