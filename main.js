@@ -1,49 +1,20 @@
-import {getRandom, createElement} from './utils.js'
-import {player1, player2} from './player.js'
-import {generateLogs} from './logs.js'
-import {enemyAttack, playerAttack, damageApply} from './fightlogic.js'
-import {winCheck, $arenas, $formFight} from './wincheck.js'
+import Game from './Game/index.js'
 
-function createPlayer(playerInfo) {
-    const $player = createElement('div', `player${playerInfo.player}`)
-    const $progressbar = createElement('div','progressbar') 
-    const $life = createElement('div','life') 
-    const $name = createElement('div','name') 
-    const $p = createElement('p')
-    const $character = createElement('div','character')
-    const $img = createElement('img')
-
-
-    $life.style.width = (`${playerInfo.hp}%`)
-    $p.innerText = playerInfo.name
-    $img.src = playerInfo.img
-
-
-    $progressbar.appendChild($life)
-    $progressbar.appendChild($name)
-
-    $name.appendChild($p)
-
-    $character.appendChild($img)
-
-    $player.appendChild($progressbar)
-    $player.appendChild($character)
-
-    return $player
-}
-
-$formFight.addEventListener('submit', function(e) {
-    e.preventDefault()
-
-    const enemy = enemyAttack()
-
-    const attack = playerAttack()
-
-    damageApply(enemy,attack)
-
-    winCheck()
+const game = new Game({
+    player1: {
+        player: 1,
+        name: 'SUB-ZERO',
+        hp: 100,
+        img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
+        rootSelector: '.arenas',
+    },
+    player2: {
+        player: 2,
+        name: 'KITANA',
+        hp: 100,
+        img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
+        rootSelector: '.arenas',
+    }
 })
 
-$arenas.appendChild(createPlayer(player1))
-$arenas.appendChild(createPlayer(player2))
-generateLogs('start', player1, player2)
+game.start()
